@@ -1,5 +1,6 @@
 import React from 'react'
-import { Avatar, AvatarFallback ,AvatarImage} from '@/components/ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import StorySection from './StorySection';
 const Sidebar = () => {
     const users = [
         {
@@ -27,35 +28,71 @@ const Sidebar = () => {
             name: "Draco Malfoy",
             dp: "https://images.unsplash.com/photo-1517841905240-472988babdf9",
         },
+        {
+            id: 6,
+            name: "Neville Longbottom",
+            dp: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde",
+        },
+        {
+            id: 7,
+            name: "Ginny Weasley",
+            dp: "https://images.unsplash.com/photo-1544005313-94ddf0286df2",
+        },
+        {
+            id: 8,
+            name: "Cedric Diggory",
+            dp: "https://images.unsplash.com/photo-1547425260-76bcadfb4f2c",
+        },
+        {
+            id: 9,
+            name: "Cho Chang",
+            dp: "https://images.unsplash.com/photo-1548142813-c348350df52b",
+        },
     ];
-
     return (
-        <section className='bg-mist-950 w-89 h-screen'>
+        <section className='bg-mist-950 w-[450px] h-screen'>
             <div className=''>
-                {/**Heading */}
-                <div className='h-20'>
-                    {/*name*/}
+                <div className='h-50 m-2'>
+                    <h2 className='text-amber-50 font-light px-4 text-xs'>Welcome Oji</h2>
+                    <span>
+                        <h1 className='text-amber-50 px-4 font-bold text-3xl'>SpellTalk</h1>
+                        <div className='text-amber-50 flex justify-between m-2 p-2'>
+                            <h2 className=''>Story</h2>
+                            <h3 className='text-white/50 text-xs'>See All</h3>
+                        </div>
+                        <div className='flex  items-center cursor-pointer text-white gap-4 overflow-x-auto hide-scrollbar m-4'>
+                            {
+                                users.map((user)=>{
+                                    return(
+                                        <StorySection key={user.id} user={user}/>
+                                    )
+                                })
+                            }
+                        </div>
+
+                    </span>
+
                     <div>
                     </div>
                     {/**search bar */}
                 </div>
 
-                <div className='bg-white h-screen rounded-t-4xl border-2 px-2  '>
+                <div className='bg-white h-screen rounded-t-4xl border-2 px-2 '>
 
                     <h2 className='font-bold px-4 py-2'>Recent Chat</h2>
                     {users.map((user) => {
                         return (
                             <div key={user.id} className='flex  items-center gap-3 p-2 hover:bg-gray-100'>
                                 <Avatar className="w-12 h-12">
-                                    <AvatarImage src={user.dp} className='border border-gray-500'/>
+                                    <AvatarImage src={user.dp} className='border border-gray-500' />
                                     <AvatarFallback>
                                         {user.dp}
                                     </AvatarFallback>
                                 </Avatar>
                                 <div className='flex flex-col'>
 
-                                <span className='font-medium'>{user.name}</span>
-                                <p>Hello</p>
+                                    <span className='font-medium'>{user.name}</span>
+                                    <p>Hello</p>
                                 </div>
                             </div>
                         )
