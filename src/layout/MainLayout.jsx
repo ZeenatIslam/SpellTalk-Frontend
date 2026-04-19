@@ -4,10 +4,18 @@ import Sidebar from "../pages/Sidebar"
 import Chat from '../pages/Chat'
 const MainLayout = () => {
   return (
-    <div className='flex '>
-      <Navigation />
-      <Sidebar />
-      <Chat/>
+    <div className='flex w-screen h-screen overflow-hidden'>
+      <div className='w-16'>
+        <Navigation />
+      </div>
+      
+      <div className='w-[400px] border-r'>
+        <Sidebar />
+      </div>
+      
+      <div className='flex-1'>
+        <Chat />
+      </div>
     </div>
   )
 }
