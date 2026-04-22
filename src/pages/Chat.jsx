@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState ,useEffect,useRef} from 'react'
 import InputMsg from './InputMsg';
 import { Phone, Video, PhoneCall } from "lucide-react";
 import {
@@ -11,8 +11,19 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Send, Smile, Paperclip, Mic,EllipsisVertical} from "lucide-react";
 import MessageBubble from './MessageBubble';
+import { connectWebSocket } from '../web.socket.js/WS';
 const Chat = () => {
+  const socket=useRef(null);
   const [open,setOpen]=useState(false);
+
+  useEffect(()=>{
+    socket.current=connectWebSocket();
+    socket.current.on("connect",()=>{
+      socket.current.emit('joinRoom','Harry Potter');
+
+    })
+
+  },[])
   return (
     <div className='relative bg-mist-950 h-screen w-full border  flex flex-col '>
       <div className='flex justify-between items-center'>
