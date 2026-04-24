@@ -8,7 +8,7 @@ export function App() {
     <>
     <Router>
       <Routes>
-        <Route path="/" element={<Profile />} />
+        <Route path="/" element={<MainLayout/>} />
       </Routes>
     </Router>
       

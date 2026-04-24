@@ -1,4 +1,4 @@
-import React, { useState ,useEffect,useRef} from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import InputMsg from './InputMsg';
 import { Phone, Video, PhoneCall } from "lucide-react";
 import {
@@ -9,21 +9,66 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Send, Smile, Paperclip, Mic,EllipsisVertical} from "lucide-react";
+import { Send, Smile, Paperclip, Mic, EllipsisVertical } from "lucide-react";
 import MessageBubble from './MessageBubble';
 import { connectWebSocket } from '../web.socket.js/WS';
+
+
+
 const Chat = () => {
-  const socket=useRef(null);
-  const [open,setOpen]=useState(false);
+  const socket = useRef(null);
+  const bottomRef = useRef(null);
 
-  useEffect(()=>{
-    socket.current=connectWebSocket();
-    socket.current.on("connect",()=>{
-      socket.current.emit('joinRoom','Harry Potter');
+  const [messages, setMessages] = useState([]);
+  const [message, setMessage] = useState("");
 
-    })
+  // replace with real IDs
+  const senderId = "123";
+  const receiverId = "456";
 
-  },[])
+  useEffect(() => {
+    socket.current = connectWebSocket();
+
+    socket.current.on("connect", () => {
+      console.log("Connected:", socket.current.id);
+
+      // register user
+      socket.current.emit("register", senderId);
+    });
+
+    // receive message
+    socket.current.on("receiveMessage", (msg) => {
+      setMessages((prev) => [...prev, msg]);
+    });
+
+    return () => {
+      socket.current.disconnect();
+    };
+  }, []);
+
+  // auto scroll
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  // send message
+  const handleSend = () => {
+    if (!message.trim()) return;
+
+    const msgData = {
+       _id: Date.now(),
+      senderId,
+      receiverId,
+      message,
+    };
+
+    // instant UI update
+    setMessages((prev) => [...prev, msgData]);
+
+    socket.current.emit("sendMessage", msgData);
+
+    setMessage("");
+  };
   return (
     <div className='relative bg-mist-950 h-screen w-full border  flex flex-col '>
       <div className='flex justify-between items-center'>
@@ -51,42 +96,48 @@ const Chat = () => {
             <Video size={22} className='hover:text-white cursor-pointer' />
           </div>
           <div>
-         <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <EllipsisVertical
-          size={22}
-          className="cursor-pointer hover:text-white"
-        />
-      </DropdownMenuTrigger>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <EllipsisVertical
+                  size={22}
+                  className="cursor-pointer hover:text-white"
+                />
+              </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="w-32 rounded-2xl">
-        <DropdownMenuItem>Contact Info</DropdownMenuItem>
-        <DropdownMenuItem>Select Messages</DropdownMenuItem>
-        <DropdownMenuItem>Mute Notification</DropdownMenuItem>
-        <DropdownMenuItem>Add to Favourite</DropdownMenuItem>
-        <DropdownMenuItem>Block User</DropdownMenuItem>
-        <DropdownMenuItem>Delete Chat</DropdownMenuItem>
-     
-      </DropdownMenuContent>
-    </DropdownMenu>
+              <DropdownMenuContent className="w-32 rounded-2xl">
+                <DropdownMenuItem>Contact Info</DropdownMenuItem>
+                <DropdownMenuItem>Select Messages</DropdownMenuItem>
+                <DropdownMenuItem>Mute Notification</DropdownMenuItem>
+                <DropdownMenuItem>Add to Favourite</DropdownMenuItem>
+                <DropdownMenuItem>Block User</DropdownMenuItem>
+                <DropdownMenuItem>Delete Chat</DropdownMenuItem>
+
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
-         
+
         </div>
       </div>
       {/**Chat Message area */}
       <div className='bg-taupe-50 h-screen w-full rounded-t-3xl flex flex-col'>
         <div className='flex-1 overflow-y-auto p-4'>
-          <MessageBubble text={'Hello'} user={'me'} />
-          <MessageBubble text={'Hii'} user={'them'} />
-          <MessageBubble text={'How are you?'} user={'me'} />
-          <MessageBubble text={'I am fine, thank you!'} user={'them'} />
-
+          {messages.map((msg, index) => (
+            <MessageBubble
+              key={msg._id || index}
+              text={msg.message}
+              user={msg.senderId === senderId ? "me" : "them"}
+            />
+          ))}
         </div>
         {/**Input Message Area */}
 
 
 
-        <InputMsg />
+        <InputMsg
+          message={message}
+          setMessage={setMessage}
+          onSend={handleSend}
+        />
 
 
 
