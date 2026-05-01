@@ -1,14 +1,18 @@
 import React, { useState } from 'react'
 import Registration from './Registration'
 import BackgroundDonuts from './BackgroundDonuts'
-
+import {useNavigate} from "react-router-dom"
+import axios from 'axios'
 const Auth = () => {
+  const navigate = useNavigate()
   const [forlogin, setForLogin] = useState(true)
 
   const [input, setInput] = useState({
-    username: "",
+    email: "",
     password: "",
   })
+  const [loading,setLoading]=useState(false);
+  const [error,setError]=useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -18,10 +22,21 @@ const Auth = () => {
     })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e) => {
     e.preventDefault()
-    console.log("form data submitted", input)
-    alert(`username: ${input.username} successfully logged in!`)
+    setLoading(true)
+    setError("");
+   
+    try{
+      const res=await axios.post("http://www.localhost:5000/api/auth/login",input);
+      navigate("/webapp");
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("userId", res.data.userId);
+    }catch(error){
+    setError(error.response?.data?.msg ||"error logging in");
+  }finally{
+    setLoading(false);
+  }
   }
 
   return (
@@ -44,11 +59,11 @@ const Auth = () => {
 
               <form onSubmit={handleSubmit} className="flex flex-col">
 
-                <label>Username</label>
+                <label>Email</label>
                 <input
-                  type="text"
-                  name="username"
-                  value={input.username}
+                  type="email"
+                  name="email"
+                  value={input.email}
                   onChange={handleChange}
                   className="p-2 my-2 rounded-xl bg-transparent border border-white/30 outline-none focus:ring-2 focus:ring-purple-400"
                   required

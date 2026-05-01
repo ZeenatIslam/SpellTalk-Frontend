@@ -2,8 +2,11 @@ import React from 'react'
 import Navigation from "../pages/Navigation"
 import Sidebar from "../pages/Sidebar"
 import Chat from '../pages/Chat'
+import {ChatProvider} from "../context/ChatContext"
 const MainLayout = () => {
   return (
+    <ChatProvider>
+
     <div className='flex w-screen h-screen overflow-hidden'>
       <div className='w-16'>
         <Navigation />
@@ -17,6 +20,7 @@ const MainLayout = () => {
         <Chat />
       </div>
     </div>
+    </ChatProvider>
   )
 }
 

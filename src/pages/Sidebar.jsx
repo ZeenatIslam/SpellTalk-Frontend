@@ -1,8 +1,27 @@
-import React from 'react'
+import React,{useContext,useEffect,useState} from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import StorySection from './StorySection';
-
+import StorySection from './StorySection'
+import {ChatContext} from "../context/ChatContext"
+import axios from 'axios'
 const Sidebar = () => {
+     const { setSelectedUser } = useContext(ChatContext);
+     const [user,setUser]=useState([]);
+
+     const fetchAllUser=async()=>{
+        try{
+            const res=await axios.get("http://www.localhost:5000/api/auth/users");
+            setUser(res.data.usersData);
+            console.log("user data",res.data.usersData);
+
+        }catch(error){
+            console.log("server error");
+        }
+     }
+     useEffect(()=>{
+        fetchAllUser();
+
+
+     },[])
     const users = [
         {
             id: 1,
@@ -78,9 +97,9 @@ const Sidebar = () => {
                         </div>
                         {/**Other users stories */}
                         {
-                            users.map((user) => {
+                            user.map((user) => {
                                 return (
-                                    <StorySection key={user.id} user={user} />
+                                    <StorySection key={user._id} user={user} />
                                 )
                             })
                         }
@@ -98,19 +117,25 @@ const Sidebar = () => {
                     <h2 className='font-bold px-4 py-2'>Recent Chat</h2>
                     <div className=''>
 
-                        {users.map((user) => {
+                        {user.map((user) => {
                             return (
-                                <div key={user.id} className='flex  items-center gap-3 p-2 hover:bg-gray-100'>
+                                <div key={user._id} className='flex  items-center gap-3 p-2 hover:bg-gray-100 cursor-pointer text-black'   
+                                onClick={() => { 
+                                setSelectedUser(user)} }>
                                     <Avatar className="w-12 h-12">
-                                        <AvatarImage src={user.dp} className='border border-gray-500' />
+                                        
+                                      
+                                        <AvatarImage  src="noUser.jpg" className='border border-gray-500' />
+                                         
                                         <AvatarFallback>
-                                            {user.dp}
+                                            No Dp
                                         </AvatarFallback>
+                                           
                                     </Avatar>
                                     <div className='flex flex-col'>
 
-                                        <span className='font-medium'>{user.name}</span>
-                                        <p>Hello</p>
+                                        <span className='font-medium'>{user.username}</span>
+                                        <p>{user.email}</p>
                                     </div>
                                 </div>
                             )
