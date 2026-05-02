@@ -22,53 +22,7 @@ const Sidebar = () => {
 
 
      },[])
-    const users = [
-        {
-            id: 1,
-            name: "Sadia",
-            dp: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
-        },
-        {
-            id: 2,
-            name: "Hermione Granger",
-            dp: "https://images.unsplash.com/photo-1494790108377-be9c29b29330",
-        },
-        {
-            id: 3,
-            name: "Ron Weasley",
-            dp: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d",
-        },
-        {
-            id: 4,
-            name: "Luna Lovegood",
-            dp: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e",
-        },
-        {
-            id: 5,
-            name: "Draco Malfoy",
-            dp: "https://images.unsplash.com/photo-1517841905240-472988babdf9",
-        },
-        {
-            id: 6,
-            name: "Neville Longbottom",
-            dp: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde",
-        },
-        {
-            id: 7,
-            name: "Ginny Weasley",
-            dp: "https://images.unsplash.com/photo-1544005313-94ddf0286df2",
-        },
-        {
-            id: 8,
-            name: "Cedric Diggory",
-            dp: "https://images.unsplash.com/photo-1547425260-76bcadfb4f2c",
-        },
-        {
-            id: 9,
-            name: "Cho Chang",
-            dp: "https://images.unsplash.com/photo-1548142813-c348350df52b",
-        },
-    ];
+    
     return (
         <section className='bg-mist-950 w-[500px] h-screen overflow-y-auto hide-scrollbar'>
             <div className=''>

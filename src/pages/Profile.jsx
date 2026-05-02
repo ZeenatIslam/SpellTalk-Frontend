@@ -7,7 +7,7 @@ const Profile = () => {
         <h1 className='px-20 py-10  text-black text-3xl'>Profile</h1>
       </div>
       <div className=' flex items-center justify-center'>
-      <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e" alt="" className='h-35 w-35 rounded-full' />
+      <img src="noUser.jpg" alt="" className='h-35 w-35 rounded-full' />
       </div>
         
       <div className=' flex-1 '>
