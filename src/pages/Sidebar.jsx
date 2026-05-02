@@ -9,7 +9,7 @@ const Sidebar = () => {
 
      const fetchAllUser=async()=>{
         try{
-            const res=await axios.get("http://www.localhost:5000/api/auth/users");
+            const res=await axios.get("https://spelltalk-backend.onrender.com/api/api/auth/users");
             setUser(res.data.usersData);
             console.log("user data",res.data.usersData);
 

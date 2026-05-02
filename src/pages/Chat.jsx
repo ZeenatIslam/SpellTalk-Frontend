@@ -49,7 +49,7 @@ const Chat = () => {
 
     try {
       const res = await axios.get(
-        `https://spelltalk-backend.onrender.com/auth/get-messages/${senderId}/${selectedUser._id}`
+        `https://spelltalk-backend.onrender.com/api/auth/get-messages/${senderId}/${selectedUser._id}`
       );
 
       console.log("old messages", res.data);
