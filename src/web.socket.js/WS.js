@@ -1,4 +1,4 @@
 import {io} from 'socket.io-client';
 export function connectWebSocket(){
-    return io('http://localhost:5000');
+    return io('https://spelltalk-backend.onrender.com');
 }
