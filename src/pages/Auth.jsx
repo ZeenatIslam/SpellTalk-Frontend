@@ -28,7 +28,7 @@ const Auth = () => {
     setError("");
    
     try{
-      const res=await axios.post("http://www.localhost:5000/api/auth/login",input);
+      const res=await axios.post("https://spelltalk-backend.onrender.com/api/auth/login",input);
       navigate("/webapp");
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("userId", res.data.userId);
