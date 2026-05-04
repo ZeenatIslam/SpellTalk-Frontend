@@ -16,7 +16,7 @@ const MainLayout = () => {
         <Sidebar />
       </div>
       
-      <div className='flex-1'>
+      <div className='flex-1 '>
         <Chat />
       </div>
     </div>

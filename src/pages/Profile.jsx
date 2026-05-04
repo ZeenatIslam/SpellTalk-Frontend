@@ -1,8 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
+import axios from 'axios'
 
-const Profile = () => {
+const Profile = (isopen) => {
+  const [userInfo,setUserInfo]=useState(null);
+
+  const fetch=async()=>{
+   
+  }
+  const updatefun=async()=>{
+    const update=await axios.push();
+
+  }
   return (
-    <div className='flex flex-col h-screen w-1/3 bg-yellow-50 '>
+    <div className='fixed top-0 left-16 h-full bg-white z-50 shadow-2xl transition-transform duration-300 translate-x-0'>
       <div>
         <h1 className='px-20 py-10  text-black text-3xl'>Profile</h1>
       </div>
